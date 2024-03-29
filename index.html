@@ -21,9 +21,9 @@
         <h6>As of March 25, 2024, India's Air Quality Index (AQI) is<span class="text-danger"> 101, which is considered "poor".</span> This level is based on PM2.5 (41µg/m³), PM10 (110µg/m³), temperature (25˚C), and humidity (54%)</h6>
       </div>
     
-    <div class="card border-0 shadow p-4 " >
+    <div class="card border-0 shadow p-4"  >
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6" >
             <div class="card p-2 border-0" style="height: 400px;">
                 <div class="d-flex">
                 <input type="text" class="form-control " id="searchValue"/>
@@ -32,34 +32,41 @@
 
                 <div class="aqi-data-content mt-3">
                      <table width="100%">
-                        <caption id="searched_cityname">Kolkata</caption>
+                        <caption id="searched_cityname">metrocity</caption>
                         <tbody>
                             <tr>
                                 <td class="fw-bold">Current AQI :</td>
-                                <td>79</td>
+                                <td><span id="currAqi">No data</span>&nbsp;<span class="fw-bold" id="aqi-scale"></span></td>
                             </tr>
                             <tr>
-                                <td class="fw-bold">Average monthly AQI :</td>
-                                <td>102</td>
+                                <td class="fw-bold">Average AQI (Current Month) :</td>
+                                <td id="avgMonthlyAqi">No data</td>
                             </tr>
                             <tr>
-                                <td class="fw-bold">AQI Air Quality Scale :</td>
-                                <td>
-                                    <span class="text-success fw-bold">Good : <span>78</span></span>
-                                    <!-- <ul>
-                                        <li class="text-success fw-bold">Good : <span>78</span></li>
-                                        <li class="text-warning fw-bold">Moderate : <span>90</span></li>
-                                        <li class="text-danger fw-bold">unhealthy : <span>> 110</span></li>
-                                    </ul> -->
-                                </td>
+                              <td class="fw-bold">Average AQI Past 3 Months:</td>
+                              <td id="avgMonthlyAqi">
+                                   <table width="100%" id="past3monthAqi">
+                                      <thead id="month-name-head">
+                                         <th>JAN</th>
+                                         <th>FEB</th>
+                                         <th>MAR</th>
+                                      </thead>
+                                      <tbody id="aqi-past-data">
+                                        <td>data</td>
+                                        <td>data</td>
+                                        <td>data</td>
+                                      </tbody>
+                                   </table>
+                              </td>
                             </tr>
+                      
                             <tr>
                                 <td  class="fw-bold">Current Pollutants : </td>
-                                <td class="text-danger fw-bold">PM10</span></td>
+                                <td class="text-danger fw-bold" id="currPollutants">PM10</span></td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Concentration</td>
-                                <td>104 - 87 µg/m³</td>
+                                <td id="polConcentration">104 - 87 µg/m³</td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -72,7 +79,11 @@
         
         </div>
         <div class="col-lg-6">
-        <div class="card p-2" style="height: 400px;">
+          <!-- for displaying monthly avg AQI of city for 12 months in chart-->
+        <div id="dataCard" class="card p-2" style="height: 400px;">
+          <div style="width: 100%; height: 100%;">
+            <canvas id="mycityAQI"></canvas>
+          </div>
         </div>
         </div>
         </div>
@@ -80,14 +91,17 @@
     </div>  
 
       
-    <div class="card border-0 shadow p-4  mt-4">
+    <div class="card border-0 shadow p-4  mt-4" style="height: 700px;">
         <div class="row">
             <div class="col-6">
-            <div class="card" >
+          <button type="button" id="avgAll" class="btn btn-dark mb-2">Show Average AQi</button>
+
+            <div class="card" style="height: 100%;
+            padding: 10px;"">
                 6 City Average AQI 
 
             
-                <div style="width: 100%; height: 250px;">
+                <div style="width: 100%; height: 100%;">
                     <canvas id="myChart"></canvas>
                   </div>
            </div>
@@ -118,51 +132,11 @@
     <script src="script.js"></script>
 
     <script>
-        const ctx = document.getElementById('myChart');
-      
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Kolkata', 'Hyderabad', 'Mumbai', 'Delhi', 'Bangalore', 'Chennai'],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
+    
       </script>
- <script>
-    const ctx2 = document.getElementById('myChart2');
-  
-    new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  </script>
 
-    <script src="style.css"></script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
