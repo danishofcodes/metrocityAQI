@@ -29,3 +29,15 @@ body{
   font-weight: 500;
   font-style: normal;
 }
+
+
+#past3monthAqi tr th, #past3monthAqi tr td{
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+
+
+#past3monthAqi tr th{
+    background-color: #f2f2f2;
+  }
