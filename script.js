@@ -84,10 +84,12 @@ const yearlyMetroCityAQI = [
   { city: "kolkata", data: [105, 120, 98, 132, 85, 118, 102, 141, 90, 108, 125, 110]},
   { city: "delhi",   data:[178, 185, 162, 190, 151, 175, 301, 198, 145, 162, 180, 172]},
   { city: "chennai",  data: [82, 91, 75, 88, 69, 85, 78, 95, 65, 79, 89, 83]},
-  { city: "hyderabad", data: [110, 125, 98, 138, 80, 112, 105, 135, 85, 101, 120, 108]},
+  { city: "hyderabad", data: [110, 125, 78, 138, 80, 112, 105, 135, 85, 101, 120, 108]},
   { city: "mumbai" ,    data: [95, 108, 82, 115, 70, 98, 90, 122, 78, 92, 105, 99]},
   { city: "bangalore" ,  data: [88, 102, 76, 110, 65, 93, 85, 118, 72, 86, 100, 94]}
 ] 
+
+console.log(yearlyMetroCityAQI[0].data[0]);
 
 // console.log(yearlyMetroCityAQI)
 
@@ -334,4 +336,84 @@ function getAvgAqiOfCities(allAverageAqi){
   // return allAverageAqi;
 }
 
+const cbaqLevels = document.getElementById("cbaqLevels");
+const l6baqLevels = document.querySelector("#l6baqLevels");
+const best2worstAQI = document.getElementById("best2worstAQI");
+const city6monthsAQILevels = document.getElementById("city6monthsAQILevels")
 
+// cbaqLevels.addEventListener('click', ()=>{
+
+//     console.log("working")
+//     // console.log(yearlyMetroCityAQI.data[month]);
+//    bestToWorstAQILevels(yearlyMetroCityAQI)
+// })
+
+function bestToWorstAQILevels(collection){
+   
+  const d = new Date();
+  let currentMonth = d.getMonth();
+  // best2worstAQI.innerHTML +="";
+  const sortedCollection = collection.sort((a, b) => a.data[currentMonth] - b.data[currentMonth]);
+
+  let row = "";
+  sortedCollection.forEach((cityCurrAqi, index)=>{
+    row += `<tr><td>${index + 1}</td><td>${cityCurrAqi.city}</td><td>${cityCurrAqi.data[currentMonth]}</td></tr>`
+    // console.log(row)
+  })
+
+//   console.log("out",row)
+//  console.log(best2worstAQI)
+  best2worstAQI.innerHTML = row ;
+     
+}
+
+
+
+
+// l6baqLevels.addEventListener('click', ()=>{
+
+//   console.log("working")
+//   // console.log(yearlyMetroCityAQI.data[month]);
+//   avgPast6MonthsAQI(yearlyMetroCityAQI)
+// })
+
+
+function avgPast6MonthsAQI(collection) {
+  const currentMonth = new Date().getMonth();
+  const startIndex = (currentMonth - 5 + 12) % 12;
+  let sortedCities = [];
+
+  collection.forEach((cityAQI) => {
+    let sum = 0;
+    let count = 0;
+
+    for (let i = startIndex; i < startIndex + 6; i++) {
+      const monthIndex = i % 12;
+      const aqiValue = cityAQI.data[monthIndex];
+
+      if (typeof aqiValue === 'number' && !isNaN(aqiValue)) { // Basic error handling
+        sum += aqiValue;
+        count++;
+      }
+    }
+
+    const avgAQI = count > 0 ? sum / count : 0; // Handle missing data
+    const cityData = { city: cityAQI.city, avgAQI };
+    sortedCities.push(cityData);
+  });
+
+  sortedCities.sort((a, b) => a.avgAQI - b.avgAQI);
+
+  // Build table row content from the sorted array
+  let row = "";
+  sortedCities.forEach((cityData, index) => {
+    row += `<tr><td>${index+1}</td><td>${cityData.city}</td><td>${Math.ceil(cityData.avgAQI)}</td></tr>`;
+  });
+
+
+
+  city6monthsAQILevels.innerHTML = row;
+}
+
+bestToWorstAQILevels(yearlyMetroCityAQI);
+avgPast6MonthsAQI(yearlyMetroCityAQI) ;
