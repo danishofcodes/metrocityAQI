@@ -98,7 +98,7 @@ const searchCityAqiBtn = document.getElementById("search-city-aqi-btn");
 const searched_cityname = document.getElementById("searched_cityname");
 
 searchCityAqiBtn.addEventListener('click', () => {
-  let cityQuery = searchValue.value;
+  let cityQuery = searchValue.value.toLowerCase();
   if (cityQuery === "") {
     console.log("noting to show")
     searched_cityname.textContent = "Input empty, search a metro city to see AQI";
@@ -251,10 +251,11 @@ function renderChartAQI(aqidata) {
 }
 
 
-const avgAll = document.getElementById("avgAll");
-avgAll.addEventListener('click', ()=>{
-  averageOfAqiOfEachCity(yearlyMetroCityAQI);
-})
+// const avgAll = document.getElementById("avgAll");
+// avgAll.addEventListener('click', ()=>{
+//   averageOfAqiOfEachCity(yearlyMetroCityAQI);
+// })
+averageOfAqiOfEachCity(yearlyMetroCityAQI);
 
 function averageOfAqiOfEachCity(yearlyMetroCityAQI){
   allAverageAqi = []
